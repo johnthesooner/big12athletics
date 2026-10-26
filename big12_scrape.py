@@ -1,9 +1,20 @@
+from pathlib import Path
+
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 
-def scrape_big_12_championship_data(url):
-    response = requests.get(url)
+def scrape_big_12_championship_data(url, output_dir='.'):
+    """Save every 'titles by season' table on a Wikipedia champions page as CSV.
+
+    Works for any conference's 'List of ... champions' page (see sec_scrape.py).
+    Note: rows whose cell count differs from the header (rowspan/co-champion
+    cells) are skipped, so shared titles can be undercounted.
+    """
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    response = requests.get(url, headers={'User-Agent': 'big12athletics-research/1.0'}, timeout=30)
+    response.raise_for_status()
     soup = BeautifulSoup(response.text, 'html.parser')
 
     # Only select tables that have a caption containing 'titles by season'
@@ -21,7 +32,7 @@ def scrape_big_12_championship_data(url):
 
         df = pd.DataFrame(all_data, columns=headers)
         table_title = table.caption.text.strip().replace('/', '_').replace(' ', '_')
-        file_name = f'{table_title}.csv'
+        file_name = output_dir / f'{table_title}.csv'
         df.to_csv(file_name, index=False)
         print(f'Data from "{table_title}" saved to {file_name}')
 
