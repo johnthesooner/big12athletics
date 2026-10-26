@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Tests (includes input validation and report-sync checks)
+        run: python -m pytest
+      - name: Regenerated report tables match the committed ones
+        run: |
+          python ou_analysis.py
+          git diff --exit-code -- 'reports/*.csv'

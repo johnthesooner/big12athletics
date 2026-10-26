@@ -1,0 +1,6 @@
+# Tested with pandas 2.2.3 and 3.0.5 on Python 3.12/3.13.
+pandas>=2.2,<4
+matplotlib>=3.8,<4
+requests>=2.31,<3
+beautifulsoup4>=4.12,<5
+pytest>=8,<10
