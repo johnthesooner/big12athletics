@@ -1,55 +1,73 @@
-# big12athletics
+# Did Oklahoma lose ground in the SEC?
 
-Big 12 conference championship history, extended with an analysis of the
-University of Oklahoma's performance since joining the SEC (July 2024).
+In July 2024 the University of Oklahoma left the Big 12 for the SEC, college sports' deepest conference. This project measures what happened next, using 30 years of conference history, sourced results for every SEC season, and Texas (which moved the same day) as a control group.
 
-**Start with [`reports/OU_SEC_Performance.md`](reports/OU_SEC_Performance.md)** for the findings.
+**[Read the story page →](docs/index.html)** (plain-English findings with interactive charts) · [Full report](reports/OU_SEC_Performance.md) · [Methodology](docs/METHODOLOGY.md)
 
-## Layout
+![Oklahoma conference titles per year](reports/ou_titles_per_year.png)
 
-| Path | What |
+## Findings (through 2025-26)
+
+| | Oklahoma | Texas |
+|---|---|---|
+| Comparable conference titles per year, last 5 Big 12 seasons | 2.4 | 2.4 |
+| Comparable conference titles per year, SEC | **1.5** | **2.5** |
+| National titles in first 2 SEC years | 3 | 2 |
+| Directors' Cup rank, 2024-25 / 2025-26 | 9 / 16 | 1 / 1 |
+
+- **OU wins fewer conference titles in the SEC; Texas does not.** Both started from the same Big 12 pace.
+- **Two seasons can't tell a real decline from a run of close losses.** A gap this size would happen about 29% of the time by chance (Poisson test), and the OU-vs-Texas split about 36% of the time (exact conditional test).
+- **OU is still elite nationally:** back-to-back gymnastics titles and the 2026 baseball title.
+
+## What this project demonstrates
+
+| Skill | Where |
 |---|---|
-| `big12_scrape.py` | Scrapes every "titles by season" table from Wikipedia's Big 12 champions list |
-| `sec_scrape.py` | Same scraper pointed at the SEC champions list (writes `SEC Championships by Season/`). Not yet run against the live page |
-| `Championships by Season/` | Scraped Big 12 champions, one CSV per sport (seasons through 2022-23) |
-| `oklahoma_sec/ou_sec_results.csv` | Curated OU SEC-era results by sport and season, each row with a source URL and confidence tag |
-| `oklahoma_sec/directors_cup.csv` | Learfield Directors' Cup ranks for OU (and Oklahoma State as a Big 12 control) |
-| `ou_analysis.py` | Validates inputs, builds the Big 12 baseline, compares it to SEC-era results, writes tables and charts |
-| `reports/` | Generated tables and charts, plus the written report |
-| `tests/` | Unit, validation, scraper (offline) and report-sync tests |
+| Data collection and curation with provenance | Wikipedia scraper with failure detection; hand-curated rows each carrying a source URL and confidence level |
+| Data quality engineering | Validation that lists every problem at once; unknown outcomes kept separate from losses; a supplement file that may fill gaps but never override scraped data |
+| Research design | Like-for-like comparison of sports and titles; recent vs full baselines; a control group that moved conferences at the same time (Texas) |
+| Statistics, with limits stated | Poisson rate test, exact conditional two-sample test, worst-case bounds for unknown outcomes, and a table of where the assumptions could fail |
+| Software engineering | Installable package and CLI, 100+ tests, ruff, CI on two Python versions |
+| Communication | A readable story page and a technical report, both generated from the same numbers; tests fail if either drifts |
 
-## Usage
+## How it works
 
-```bash
-pip install -r requirements.txt
-python ou_analysis.py        # regenerates reports/*.csv and reports/*.png
-python -m pytest             # run all tests
-python big12_scrape.py       # optional: needs network access to Wikipedia
-python sec_scrape.py         # optional: needs network access to Wikipedia
+```mermaid
+flowchart LR
+  W[Wikipedia champions tables] -->|ou-sec scrape| R[data/raw]
+  C[Curated CSVs<br/>sourced + confidence-tagged] --> V
+  R --> V{ou-sec validate<br/>every rule, every row}
+  V -->|fails loudly| X[list of problems]
+  V --> A[analysis<br/>baselines · tests · peers]
+  A --> T[reports/*.csv + charts]
+  A --> S[docs/index.html<br/>story page]
+  T & S --> CI[CI: tests fail if<br/>outputs are stale]
 ```
 
-`ou_analysis.py` exits with status 1 and lists every problem if any input
-fails validation. It writes nothing in that case.
+## Quickstart
 
-## Curated data rules (`oklahoma_sec/ou_sec_results.csv`)
+```bash
+pip install -e ".[dev]"
+ou-sec validate     # check every input file, print coverage
+ou-sec all          # regenerate reports/ and docs/index.html
+make check          # lint + tests (what CI runs)
+```
 
-| Column | Allowed values |
-|---|---|
-| `academic_year` | `YYYY-YY`, 2024-25 or later |
-| `sport` | Football, Baseball, Softball, Men's/Women's Basketball, Women's Soccer, Volleyball, Women's Gymnastics |
-| `reg_season_title`, `tourney_title` | `Y`, `N`, `shared`, `-` (event not held that year), blank (unknown) |
-| `conf_wins`, `conf_losses`, `conf_ties` | Non-negative integers. Wins and losses must both be set or both be blank |
-| `national_title` | `Y` or `N` |
-| `confidence` | `high`, `medium`, `low`, `missing` |
-| `source` | `https://` URL (required unless confidence is `missing`) |
+Other commands: `ou-sec report`, `ou-sec site`, `ou-sec scrape big12|sec` (needs network access to Wikipedia).
 
-**Unknown is not the same as "did not win".** Blank title flags are reported as
-unknown outcomes, and the statistical check gives p-values both with and without them.
+## Repository layout
 
-## Adding a season
+```
+src/ou_sec/       config · data (load + validate) · analysis · charts · site · scrape · cli
+data/raw/         scraped Big 12 champions (never hand-edited)
+data/curated/     SEC results, Big 12 2023-24 supplement, Directors' Cup (sourced)
+reports/          generated tables, charts, and the written report
+docs/             story page (index.html), methodology, data dictionary, roadmap
+tests/            unit, validation, scraper (offline), site, and sync tests
+```
 
-1. Append one row per sport to `oklahoma_sec/ou_sec_results.csv`, and the Directors' Cup rank to `directors_cup.csv`.
-2. Run `python ou_analysis.py` and commit the regenerated `reports/` files.
-3. Update any figures quoted in `reports/OU_SEC_Performance.md`. `tests/test_reports_in_sync.py` fails until the key figures match.
+## Limitations
 
-CI (`.github/workflows/ci.yml`) runs the tests on Python 3.12 and 3.13 and fails if the committed report tables are stale.
+Two SEC seasons is a small sample. The SEC-era rows were curated from web-search results, cross-checked where possible: 19 of 30 are high confidence, 10 medium and 1 low. Some shared Big 12 titles are probably undercounted. Details are in the [report](reports/OU_SEC_Performance.md#5-limitations), and the planned fixes are in the [roadmap](docs/ROADMAP.md).
+
+To add a season, see [docs/DATA_DICTIONARY.md](docs/DATA_DICTIONARY.md), then run `ou-sec all`.

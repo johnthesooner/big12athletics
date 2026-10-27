@@ -1,11 +1,7 @@
-import sys
-from pathlib import Path
-
 import pandas as pd
 import pytest
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import big12_scrape as bs  # noqa: E402
+from ou_sec import scrape as bs
 
 PAGE = """
 <html><body>
@@ -48,7 +44,7 @@ def test_row_header_cells_are_kept_and_irregular_rows_counted():
 
 def test_scrape_writes_files_and_skips_empty(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr(bs.requests, 'get', lambda url, **kw: FakeResponse(PAGE))
-    written = bs.scrape_big_12_championship_data('https://example.org', tmp_path)
+    written = bs.scrape_champions('https://example.org', tmp_path)
     assert [p.name for p in written] == ['Softball_titles_by_season.csv']
     out = pd.read_csv(written[0], dtype=str)
     assert out.loc[1, 'Regular Season'] == 'Oklahoma †'
@@ -60,17 +56,22 @@ def test_empty_table_does_not_overwrite_existing_file(tmp_path, monkeypatch):
     existing = tmp_path / 'Empty_titles_by_season.csv'
     existing.write_text('keep me')
     monkeypatch.setattr(bs.requests, 'get', lambda url, **kw: FakeResponse(PAGE))
-    bs.scrape_big_12_championship_data('https://example.org', tmp_path)
+    bs.scrape_champions('https://example.org', tmp_path)
     assert existing.read_text() == 'keep me'
 
 
 def test_page_without_tables_raises(tmp_path, monkeypatch):
     monkeypatch.setattr(bs.requests, 'get', lambda url, **kw: FakeResponse('<html></html>'))
     with pytest.raises(RuntimeError, match='layout may have changed'):
-        bs.scrape_big_12_championship_data('https://example.org', tmp_path)
+        bs.scrape_champions('https://example.org', tmp_path)
 
 
 def test_http_error_propagates(tmp_path, monkeypatch):
     monkeypatch.setattr(bs.requests, 'get', lambda url, **kw: FakeResponse('', status=503))
     with pytest.raises(RuntimeError, match='503'):
-        bs.scrape_big_12_championship_data('https://example.org', tmp_path)
+        bs.scrape_champions('https://example.org', tmp_path)
+
+
+def test_named_sources_cover_both_conferences():
+    assert set(bs.SOURCES) == {'big12', 'sec'}
+    assert all(url.startswith('https://en.wikipedia.org/') for url, _ in bs.SOURCES.values())

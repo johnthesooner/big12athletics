@@ -1,0 +1,5 @@
+school,baseline,big12_years,big12_rate_per_year,sec_years,expected_titles_at_big12_rate,observed_sec_titles,unknown_outcomes,p_at_most_observed,p_if_unknowns_were_titles
+Oklahoma,Big 12 full history,28,1.93,2,3.86,3,2,0.4619,0.807
+Oklahoma,Big 12 last 5 years,5,2.4,2,4.8,3,2,0.2942,0.651
+Texas,Big 12 full history,28,1.75,2,3.5,5,0,0.8576,0.8576
+Texas,Big 12 last 5 years,5,2.4,2,4.8,5,0,0.651,0.651

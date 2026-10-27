@@ -1,0 +1,30 @@
+school,academic_year,sport,conf_wins,conf_losses,conf_ties,conf_win_pct,confidence
+Oklahoma,2024-25,Football,2,6,0,0.25,high
+Oklahoma,2024-25,Men's Basketball,6,12,0,0.333,high
+Oklahoma,2024-25,Women's Basketball,11,5,0,0.688,high
+Oklahoma,2024-25,Women's Gymnastics,7,1,0,0.875,high
+Oklahoma,2024-25,Softball,17,7,0,0.708,high
+Oklahoma,2024-25,Baseball,14,16,0,0.467,medium
+Oklahoma,2024-25,Volleyball,8,8,0,0.5,medium
+Oklahoma,2025-26,Football,6,2,0,0.75,high
+Oklahoma,2025-26,Men's Basketball,7,11,0,0.389,medium
+Oklahoma,2025-26,Women's Basketball,11,5,0,0.688,medium
+Oklahoma,2025-26,Women's Gymnastics,8,0,0,1.0,high
+Oklahoma,2025-26,Softball,20,4,0,0.833,medium
+Oklahoma,2025-26,Baseball,14,16,0,0.467,medium
+Oklahoma,2025-26,Volleyball,7,8,0,0.467,medium
+Oklahoma,2025-26,Women's Soccer,3,4,3,0.45,medium
+Texas,2024-25,Football,7,1,0,0.875,high
+Texas,2025-26,Football,6,2,0,0.75,high
+Texas,2024-25,Baseball,22,8,0,0.733,high
+Texas,2025-26,Baseball,19,10,0,0.655,high
+Texas,2024-25,Softball,16,8,0,0.667,high
+Texas,2025-26,Softball,16,8,0,0.667,high
+Texas,2024-25,Men's Basketball,6,12,0,0.333,high
+Texas,2025-26,Men's Basketball,9,9,0,0.5,high
+Texas,2024-25,Women's Basketball,15,1,0,0.938,high
+Texas,2025-26,Women's Basketball,13,3,0,0.812,high
+Texas,2024-25,Women's Soccer,6,3,1,0.65,high
+Texas,2025-26,Women's Soccer,2,8,0,0.2,medium
+Texas,2024-25,Volleyball,13,3,0,0.812,medium
+Texas,2025-26,Volleyball,13,2,0,0.867,high

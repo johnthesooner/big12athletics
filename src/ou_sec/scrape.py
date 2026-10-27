@@ -1,13 +1,25 @@
+"""Scrape Wikipedia 'List of ... champions' pages into one CSV per sport."""
 import re
 import sys
 from pathlib import Path
 
-import requests
 import pandas as pd
+import requests
 from bs4 import BeautifulSoup
+
+from . import config as cfg
 
 USER_AGENT = 'big12athletics-research/1.0 (https://github.com/johnthesooner/big12athletics)'
 _CITATION = re.compile(r'\[[^\]]*\]')
+
+# Named sources for the CLI: `ou-sec scrape big12` / `ou-sec scrape sec`.
+# The SEC page has not been run end to end (the build environment could not
+# reach Wikipedia); the scraper fails loudly if its tables are not found.
+SOURCES = {
+    'big12': ('https://en.wikipedia.org/wiki/List_of_Big_12_Conference_champions', cfg.BIG12_DIR),
+    'sec': ('https://en.wikipedia.org/wiki/List_of_Southeastern_Conference_champions',
+            cfg.DATA_DIR / 'raw' / 'sec_champions'),
+}
 
 
 def _cell_text(cell):
@@ -51,7 +63,7 @@ def find_titles_tables(html):
             if t.caption and 'titles by season' in t.caption.get_text().lower()]
 
 
-def scrape_big_12_championship_data(url, output_dir='Championships by Season'):
+def scrape_champions(url, output_dir):
     """Save every 'titles by season' table on a Wikipedia champions page as CSV.
 
     Works for any conference's 'List of ... champions' page (see sec_scrape.py).
@@ -81,8 +93,3 @@ def scrape_big_12_championship_data(url, output_dir='Championships by Season'):
         written.append(file_name)
         print(f'Data from "{stem}" saved to {file_name}')
     return written
-
-
-if __name__ == '__main__':
-    url = 'https://en.wikipedia.org/wiki/List_of_Big_12_Conference_champions'
-    scrape_big_12_championship_data(url)

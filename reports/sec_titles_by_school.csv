@@ -1,0 +1,11 @@
+school,academic_year,sport,title_type,shared
+Oklahoma,2024-25,Women's Gymnastics,reg_season_title,True
+Oklahoma,2024-25,Softball,reg_season_title,False
+Oklahoma,2024-25,Softball,tourney_title,True
+Oklahoma,2025-26,Women's Gymnastics,reg_season_title,False
+Oklahoma,2025-26,Softball,reg_season_title,False
+Texas,2024-25,Baseball,reg_season_title,False
+Texas,2025-26,Softball,tourney_title,False
+Texas,2024-25,Women's Basketball,reg_season_title,True
+Texas,2025-26,Women's Basketball,tourney_title,False
+Texas,2024-25,Women's Soccer,tourney_title,False

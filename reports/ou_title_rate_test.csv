@@ -1,3 +1,0 @@
-baseline,big12_years,big12_rate_per_year,sec_years,expected_titles_at_big12_rate,observed_sec_titles,unknown_outcomes,p_at_most_observed,p_if_unknowns_were_titles
-Big 12 full history,27,1.85,2,3.7,3,2,0.4934,0.8296
-Big 12 last 5 years,5,2.0,2,4.0,3,2,0.4335,0.7851

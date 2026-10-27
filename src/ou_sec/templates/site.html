@@ -1,0 +1,163 @@
+<title>Sooners in the SEC</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Did the University of Oklahoma lose ground moving from the Big 12 to the SEC? A sourced, tested look at conference titles, national results and a Texas comparison.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single reading column (~68ch) that widens for charts and the sport table;
+   a scoreboard strip carries the four headline numbers. */
+:root {
+  --bg: #f5f6f7; --surface: #ffffff; --ink: #1b1f27; --ink-2: #474e5c; --muted: #677080;
+  --rule: #dcdfe5; --grid: #e7e9ed;
+  --ou: #a6283a; --tx: #d0691f; --big12: #8a94a6; --osu: #5f6673;
+  --ou-wash: #f7e6e9; --unknown: #8a94a6;
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --step--1: 0.875rem; --step-0: 1.0625rem; --step-1: 1.3rem; --step-2: 1.75rem; --step-3: clamp(2.2rem, 5vw, 3.4rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121316; --surface: #18191d; --ink: #eceef2; --ink-2: #bcc1ca; --muted: #8d939e;
+    --rule: #2d3038; --grid: #24272d;
+    --ou: #cc4058; --tx: #c98224; --big12: #6d7585; --osu: #9aa1ad;
+    --ou-wash: #3a1d23; --unknown: #8d939e; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121316; --surface: #18191d; --ink: #eceef2; --ink-2: #bcc1ca; --muted: #8d939e;
+  --rule: #2d3038; --grid: #24272d;
+  --ou: #cc4058; --tx: #c98224; --big12: #6d7585; --osu: #9aa1ad;
+  --ou-wash: #3a1d23; --unknown: #8d939e; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: var(--step-0); line-height: 1.6; }
+.wrap { max-width: 68rem; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: var(--ou); text-underline-offset: 2px; }
+a:focus-visible, [tabindex]:focus-visible, summary:focus-visible { outline: 2px solid var(--ou); outline-offset: 2px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.1; text-wrap: balance; margin: 0; }
+h1 { font-size: var(--step-3); letter-spacing: 0.005em; max-width: 18ch; }
+h2 { font-size: var(--step-2); }
+h3 { font-size: var(--step-1); font-weight: 500; }
+p, li { max-width: 68ch; }
+code { font-family: var(--mono); font-size: 0.9em; }
+
+.masthead { border-bottom: 1px solid var(--rule); padding-block: 2.5rem 2rem; background: var(--surface); }
+.masthead .wrap { display: grid; gap: 0.9rem; }
+.eyebrow { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.dek { font-size: var(--step-1); line-height: 1.45; color: var(--ink-2); margin: 0; }
+.dek strong { color: var(--ink); }
+
+main { display: grid; gap: 3.25rem; padding-block: 2rem 3rem; }
+section { display: grid; gap: 1rem; min-width: 0; }
+.lede { color: var(--ink-2); margin: 0; }
+
+.scoreboard { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border: 1px solid var(--rule); background: var(--surface); }
+.tile { padding: 1rem 1.1rem; display: grid; gap: 0.15rem; align-content: start; border-left: 1px solid var(--rule); }
+.tile:first-child { border-left: 0; }
+.tile-value { font-family: var(--display); font-weight: 700; font-size: 2.6rem; line-height: 1; }
+.tile:first-child .tile-value { color: var(--ou); }
+.tile-label { font-family: var(--display); font-weight: 500; font-size: 1.05rem; letter-spacing: 0.02em; }
+.tile-note { font-size: var(--step--1); color: var(--muted); line-height: 1.35; }
+@media (max-width: 760px) {
+  .scoreboard { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tile:nth-child(3) { border-left: 0; }
+  .tile:nth-child(n+3) { border-top: 1px solid var(--rule); }
+}
+
+.answers { display: grid; gap: 0.7rem; padding-left: 1.2rem; margin: 0; }
+.figure { margin: 0; display: grid; gap: 0.6rem; background: var(--surface); border: 1px solid var(--rule); padding: 1rem; min-width: 0; }
+.figure.narrow { max-width: 44rem; }
+figcaption { font-size: var(--step--1); color: var(--muted); }
+.chart-scroll { overflow-x: auto; }
+.chart { width: 100%; min-width: 44rem; height: auto; display: block; }
+.figure.narrow .chart { min-width: 30rem; }
+.chart text { font-family: var(--mono); fill: var(--muted); font-size: 12px; }
+.chart .label { fill: var(--ink); font-size: 12px; }
+.chart .value { fill: var(--ink); font-size: 11px; font-weight: 500; }
+.chart .note { fill: var(--muted); font-size: 10px; }
+.chart .grid { stroke: var(--grid); stroke-width: 1; }
+.chart .axis { stroke: var(--rule); stroke-width: 1; }
+.chart .divider { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 3; }
+.chart .hit { fill: transparent; }
+.chart .bar.big12 { fill: var(--big12); }
+.chart .bar.ou { fill: var(--ou); }
+.chart .bar.tx { fill: var(--tx); }
+.chart .unknown { fill: none; stroke-width: 1.5; stroke-dasharray: 3 2; }
+.chart .unknown.ou { stroke: var(--ou); }
+.chart .unknown.tx { stroke: var(--tx); }
+.chart .line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.chart .line.ou, .chart .dot.ou { stroke: var(--ou); }
+.chart .line.tx, .chart .dot.tx { stroke: var(--tx); }
+.chart .line.osu, .chart .dot.osu { stroke: var(--osu); }
+.chart .dot { stroke-width: 2; paint-order: stroke; }
+.chart .dot.ou { fill: var(--ou); stroke: var(--surface); }
+.chart .dot.tx { fill: var(--tx); stroke: var(--surface); }
+.chart .dot.osu { fill: var(--osu); stroke: var(--surface); }
+.chart .mark:hover .bar, .chart .mark:focus .bar { opacity: 0.8; }
+.chart .mark:hover .dot, .chart .mark:focus .dot { r: 6; }
+.chart .mark:focus { outline: none; }
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.9rem; font-family: var(--mono); font-size: 0.78rem; color: var(--ink-2); }
+.key { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: -0.5rem; }
+.key.big12 { background: var(--big12); } .key.ou { background: var(--ou); } .key.tx { background: var(--tx); }
+
+details > summary { cursor: pointer; font-family: var(--mono); font-size: 0.82rem; color: var(--ink-2); }
+details[open] > summary { margin-bottom: 0.6rem; }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: var(--step--1); }
+th, td { text-align: left; vertical-align: top; padding: 0.55rem 0.7rem 0.55rem 0; border-bottom: 1px solid var(--rule); }
+thead th { font-family: var(--mono); font-weight: 500; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+table.numbers td { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+table.sports { min-width: 40rem; background: var(--surface); }
+table.sports th[scope="row"] { font-family: var(--display); font-size: 1.1rem; font-weight: 600; white-space: nowrap; padding-left: 0.7rem; }
+table.sports td { width: 42%; }
+.rec { color: var(--ink-2); }
+.rec .num { font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 500; }
+.post { color: var(--muted); margin-top: 0.15rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.3rem; }
+.chips:empty { display: none; }
+.chip { font-family: var(--mono); font-size: 0.72rem; padding: 0.1rem 0.45rem; border-radius: 3px; border: 1px solid transparent; }
+.chip.win { background: var(--ou-wash); color: var(--ink); border-color: var(--ou); }
+.chip.natl { background: var(--ou); color: #ffffff; font-weight: 500; }
+.chip.unknown { border: 1px dashed var(--unknown); color: var(--muted); }
+.conf { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); border: 1px solid var(--rule); padding: 0 0.3rem; border-radius: 3px; }
+.src { font-family: var(--mono); font-size: 0.72rem; }
+.muted { color: var(--muted); }
+.peer-table { margin-top: 0.5rem; }
+
+.levels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+.levels > div { display: grid; gap: 0.4rem; align-content: start; min-width: 0; }
+.levels p { margin: 0; color: var(--ink-2); }
+@media (max-width: 760px) { .levels { grid-template-columns: 1fr; } }
+.method ul { display: grid; gap: 0.5rem; padding-left: 1.2rem; margin: 0; }
+.sources { font-family: var(--mono); font-size: 0.75rem; display: grid; gap: 0.2rem; padding-left: 1.6rem; }
+.sources a { overflow-wrap: anywhere; }
+.footer { border-top: 1px solid var(--rule); padding-block: 1.5rem 2.5rem; color: var(--muted); font-size: var(--step--1); }
+
+.tooltip { position: fixed; z-index: 20; pointer-events: none; background: var(--ink); color: var(--bg); font-family: var(--mono); font-size: 0.78rem; padding: 0.35rem 0.55rem; border-radius: 4px; max-width: 18rem; }
+@media (prefers-reduced-motion: no-preference) { .chart .bar, .chart .dot { transition: opacity 120ms, r 120ms; } }
+</style>
+<!--BODY-->
+<script>
+(function () {
+  var tip = document.getElementById('tooltip');
+  if (!tip) return;
+  function show(el, x, y) {
+    tip.textContent = el.getAttribute('data-tip');
+    tip.hidden = false;
+    var w = tip.offsetWidth, h = tip.offsetHeight;
+    var left = Math.min(Math.max(8, x + 12), window.innerWidth - w - 8);
+    var top = y - h - 12 < 8 ? y + 16 : y - h - 12;
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+  }
+  document.querySelectorAll('[data-tip]').forEach(function (el) {
+    // Native <title> tooltips double up with ours once the script runs.
+    var t = el.querySelector('title'); if (t) { el.setAttribute('aria-label', t.textContent); t.remove(); }
+    el.addEventListener('pointermove', function (ev) { show(el, ev.clientX, ev.clientY); });
+    el.addEventListener('pointerleave', function () { tip.hidden = true; });
+    el.addEventListener('focus', function () { var r = el.getBoundingClientRect(); show(el, r.left + r.width / 2, r.top); });
+    el.addEventListener('blur', function () { tip.hidden = true; });
+  });
+})();
+</script>
